@@ -1,0 +1,85 @@
+#### Ejemplo {-}
+Author: Maria Teresa Ortiz
+
+
+
+Supongamos que lanzamos una moneda 10 veces y obtenemos los siguientes resultados:
+
+```{r}
+set.seed(2881)
+lanzamientos_10 <- sample(c("A", "S"), 10, replace = TRUE)
+lanzamientos_10
+```
+
+Podemos calcular las secuencia de frecuencias relativas de águila:
+
+```{r}
+cumsum(lanzamientos_10 == "A") # suma acumulada de águilas
+cumsum(lanzamientos_10 == "A") / 1:10
+```
+
+
+### Resultados empíricos acerca de frecuencias relativas {-}
+
+Una primera observación empírica es que las frecuencias relativas basadas en un 
+número mayor de observaciones son menos fluctuantes comparado con las 
+frecuencias relativas basadas en pocas observaciones. 
+
+Este fenómeno se conoce a veces como la **ley empírica de los promedios** (que 
+se formaliza después en las leyes de los grandes números):
+
+```{r, fig.width=8.2, fig.height=3.8}
+library(magrittr)
+library(dplyr)
+n <- 1000
+tibble(num_lanzamiento = 1:n, lanzamiento = sample(c("A", "S"), n, 
+    replace = TRUE)) %>% 
+    mutate(frec_rel = cummean(lanzamiento == "A")) %>%
+    ggplot(aes(x = num_lanzamiento, y = frec_rel)) +
+        geom_hline(yintercept = 0.5, color = "red", alpha = 0.5) +
+        geom_line(color = "darkgray") +
+        geom_point(size = 1.0) +
+        labs(y = "frecuencia relativa", title = "1000 volados", 
+            x = "lanzamiento")
+```
+
+Veamos las frecuencias relativas para 3 series de 1000 lanzamientos.
+
+```{r, fig.width=8.2, fig.height=3.8}
+library(purrr)
+lanzar <- function(n = 1000){
+    tibble(num_lanzamiento = 1:n, lanzamiento = sample(c("A", "S"), n, 
+        replace = TRUE)) %>% 
+        mutate(frec_rel = cummean(lanzamiento == "A"))
+  }
+head(lanzar())
+set.seed(31287931)
+# usamos la función map_df del paquete purrr
+map_df(1:3, ~lanzar(), .id = "serie") %>% 
+    ggplot(aes(x = log(num_lanzamiento), y = frec_rel, 
+        color = as.character(serie))) +
+        geom_hline(yintercept = 0.5, color = "darkgray") + 
+        geom_line() +
+        scale_x_continuous("lanzamiento", labels = exp, 
+            breaks = log(sapply(0:10, function(i) 2 ^ i))) +
+        labs(color = "serie", y = "frecuencia relativa", title = "1000 volados")
+```
+
+La segunda observación empírica es que, cuando el modelo de resultados
+equiprobables es apropiado:
+
+- En el modelo de resultados equiprobables, la frecuencia relativa a largo plazo de ocurrencia de un evento es su probabilidad $P(A)$ de ocurrencia 
+
+```{block2, type="caja"}
+En la **interpretación frecuentista**, la probabilidad de un evento $A$ es la 
+estimación de la frecuencia relativa de $A$ cuando el número de ensayos tiende
+a infinito. Si denotemos la proporción de veces que ocurre $A$ en $n$ ensayos por 
+$P_n(A)$, se espera que $P_n(A)$ sea cercana a la probabilidad $P(A)$ si $n$ 
+es _grande_:
+$$P_n(A) \approx P(A)$$
+```
+
+- Esta interpretación es crucial, pues es la única que realmente nos
+permite conectar nuestros modelos probabilísticos con observaciones
+empíricas.
+
