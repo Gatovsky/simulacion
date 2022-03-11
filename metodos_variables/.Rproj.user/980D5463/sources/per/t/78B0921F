@@ -1,0 +1,27 @@
+{
+    "id": "78B0921F",
+    "path": "~/Simulacion/metodos_variables/dis_binomial.R",
+    "project_path": "dis_binomial.R",
+    "type": "r_source",
+    "hash": "1217256515",
+    "contents": "",
+    "dirty": true,
+    "created": 1645330006402.0,
+    "source_on_save": false,
+    "relative_order": 3,
+    "properties": {
+        "tempName": "Untitled1",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "92,0",
+        "scrollLine": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1645348138,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1645348597419,
+    "read_only": false,
+    "read_only_alternatives": []
+}

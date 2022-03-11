@@ -1,0 +1,7 @@
+{
+    "installOptions": {
+        "installFromRepository": true,
+        "libraryPath": "/home/elpsycongroo/home/elpsycongroo/Simulacion/metodos_variables/renv/library/R-4.1/x86_64-pc-linux-gnu",
+        "installDependencies": true
+    }
+}
