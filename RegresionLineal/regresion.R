@@ -1,4 +1,4 @@
-ventas_anuales <- read.table("~/Simulacion/RegresionLineal/ventaautos.txt", header = TRUE)
+ventas_anuales <- read.table("~/simulacion/RegresionLineal/ventaautos.txt", header = TRUE)
 names(ventas_anuales)
 pairs(ventas_anuales, pch = 19, col = 4)
 
